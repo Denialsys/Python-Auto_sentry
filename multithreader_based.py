@@ -19,25 +19,24 @@ https://docs.nvidia.com/cuda/
 import cv2
 import threading
 import queue
-import RPi.GPIO as GPIO
 import time
-
+# import RPi.GPIO as GPIO
 # Load the pre-trained Haar cascade for human detection
 human_cascade = cv2.CascadeClassifier('cascades/haarcascade_fullbody.xml')
 
 # Initialize the camera
 cap = cv2.VideoCapture(0)
 
-# Initialize the servo motors
-servo_a_pin = 27
-servo_b_pin = 22
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(servo_a_pin, GPIO.OUT)
-GPIO.setup(servo_b_pin, GPIO.OUT)
-servo_a = GPIO.PWM(servo_a_pin, 50)  # 50 Hz PWM frequency
-servo_b = GPIO.PWM(servo_b_pin, 50)  # 50 Hz PWM frequency
-servo_a.start(0)  # Initialize the servos to their default position
-servo_b.start(0)
+# # Initialize the servo motors
+# servo_a_pin = 27
+# servo_b_pin = 22
+# GPIO.setmode(GPIO.BCM)
+# GPIO.setup(servo_a_pin, GPIO.OUT)
+# GPIO.setup(servo_b_pin, GPIO.OUT)
+# servo_a = GPIO.PWM(servo_a_pin, 50)  # 50 Hz PWM frequency
+# servo_b = GPIO.PWM(servo_b_pin, 50)  # 50 Hz PWM frequency
+# servo_a.start(0)  # Initialize the servos to their default position
+# servo_b.start(0)
 
 # Define the worker function for human detection and tracking
 def worker(input_queue, output_queue):
@@ -107,9 +106,9 @@ while True:
             angle_a = center_y * (180/480)  # Assumes a 480 pixel high image
             angle_b = center_x * (180/640)  # Assumes a 640 pixel wide image
 
-            # Set the servo angles
-            servo_a.ChangeDutyCycle(2 + (angle_a/18))
-            servo_b.ChangeDutyCycle(2 + (angle_b/18))
+            # # Set the servo angles
+            # servo_a.ChangeDutyCycle(2 + (angle_a/18))
+            # servo_b.ChangeDutyCycle(2 + (angle_b/18))
             time.sleep(0.05)  # Allow the servos to reach their target position
 
     # Display the resulting frame
